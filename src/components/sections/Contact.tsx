@@ -55,6 +55,7 @@ export function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const [usedFallback, setUsedFallback] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,10 +76,14 @@ export function Contact() {
         )}`
       );
       window.location.href = `mailto:${siteConfig.email}?subject=${subject}&body=${body}`;
+      setUsedFallback(true);
+      setStatus("success");
+      setTimeout(() => setStatus("idle"), 8000);
       return;
     }
 
     try {
+      setUsedFallback(false);
       setStatus("sending");
       setError("");
       await emailjs.sendForm(serviceId, templateId, formRef.current, {
@@ -237,10 +242,26 @@ export function Contact() {
               <motion.p
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="flex items-center gap-2 text-sm text-emerald-500"
+                className="flex flex-col gap-1 text-sm text-emerald-500"
               >
-                <CheckCircle2 className="h-4 w-4" />
-                Message sent — thank you!
+                <span className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 shrink-0" />
+                  {usedFallback
+                    ? "Opening your email app…"
+                    : "Message sent — thank you!"}
+                </span>
+                {usedFallback && (
+                  <span className="pl-6 text-muted-foreground">
+                    Nothing happened? Email me directly at{" "}
+                    <a
+                      href={`mailto:${siteConfig.email}`}
+                      className="font-medium text-foreground underline underline-offset-2 hover:text-primary"
+                    >
+                      {siteConfig.email}
+                    </a>
+                    .
+                  </span>
+                )}
               </motion.p>
             )}
             {status === "error" && (

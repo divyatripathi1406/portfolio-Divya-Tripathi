@@ -19,7 +19,7 @@ export const siteConfig = {
   resume: "/resume.pdf",
   ogImage: "/og.png",
   links: {
-    github: "https://github.com/DIVYATRIPATHI8",
+    github: "https://github.com/divyatripathi1406",
     linkedin: "https://linkedin.com/in/divyatripathi14",
   },
   keywords: [

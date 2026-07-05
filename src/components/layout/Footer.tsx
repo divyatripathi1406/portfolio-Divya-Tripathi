@@ -9,7 +9,7 @@ import { scrollToSection } from "@/lib/utils";
 const socials = [
   { label: "GitHub", href: siteConfig.links.github, icon: Github },
   { label: "LinkedIn", href: siteConfig.links.linkedin, icon: Linkedin },
-  { label: "Email", href: `mailto:${siteConfig.email}`, icon: Mail },
+  // { label: "Email", href: `mailto:${siteConfig.email}`, icon: Mail },
 ];
 
 export function Footer() {
